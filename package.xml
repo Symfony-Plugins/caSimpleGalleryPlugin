@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.6" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>caSimpleGalleryPlugin</name>
+ <channel>plugins.symfony-project.org</channel>
+ <summary>caSimpleGalleryPlugin is a simple plugin to display dynamic photo gallery</summary>
+ <description>caSimpleGalleryPlugin is a simple plugin to display dynamic photo gallery. Plugin is based on the Strategy design pattern so that in a very quick way you can change how to display images by creating your own class (as is the case of widgets)</description>
+ <lead>
+  <name>Damian Kopiec</name>
+  <user>damiankopiec</user>
+  <email>kopiec.damian@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-08-11</date>
+ <time>16:57:12</time>
+ <version>
+  <release>0.6.2</release>
+  <api>0.6.2</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://kopiec.net/Hydepark/Licencje/New-BSD-Licence">New BSD license</license>
+ <notes>-</notes>
+ <contents>
+  <dir name="/">
+   <file role="data" name="README" />
+   <file role="data" name="LICENSE" />
+   <dir name="lib">
+    <dir name="engines">
+     <file role="data" name="caBaseGallery.class.php" />
+     <file role="data" name="caJdGallery.class.php" />
+     <file role="data" name="caS3SliderGallery.class.php" />
+    </dir>
+    <file role="data" name="caFile.class.php" />
+    <file role="data" name="caSimpleGallery.class.php" />
+    <file role="data" name="caSimpleImage.class.php" />
+   </dir>
+   <dir name="web">
+    <dir name="images">
+     <dir name="galleries">
+      <dir name="images" />
+      <dir name="thumbs" />
+     </dir>
+    </dir>
+    <dir name="jdgallery">
+     <dir name="css">
+       <file role="data" name="jd.gallery.css" />
+     </dir>
+     <dir name="images">
+       <dir name="bg">
+         <file role="data" name="biglink_off.gif" />
+         <file role="data" name="biglink_on.gif" />
+         <file role="data" name="bullet.gif" />
+         <file role="data" name="footer.jpg" />
+         <file role="data" name="gradient.jpg" />
+         <file role="data" name="gradient1.gif" />
+         <file role="data" name="header.jpg" />
+       </dir>
+     </dir>
+     <dir name="js">
+       <file role="data" name="jd.gallery.js" />
+       <file role="data" name="mootools-1.2-more.js" />
+       <file role="data" name="mootools-1.2.1-core-yc.js" />
+     </dir>
+    </dir>
+    <dir name="s3Slider">
+      <dir name="css">
+        <file role="data" name="s3Slider.css" />
+      </dir>
+      <dir name="js">
+        <file role="data" name="jquery.js" />
+        <file role="data" name="s3Slider.js" />
+      </dir>
+    </dir>
+   </dir>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.5</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.1.0</min>
+    <max>1.3.0</max>
+    <exclude>1.3.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+    <version>
+      <release>0.6.0</release>
+      <api>0.6.0</api>
+    </version>
+    <stability>
+      <release>beta</release>
+      <api>beta</api>
+    </stability>
+    <date>2009-08-11</date>
+    <license uri="http://www.symfony-project.com/license">MIT license</license>
+    <notes>Initial public release</notes>
+  </release>
+  <release>
+    <version>
+      <release>0.6.1</release>
+      <api>0.6.1</api>
+    </version>
+    <stability>
+      <release>beta</release>
+      <api>beta</api>
+    </stability>
+    <date>2009-08-11</date>
+    <license uri="http://www.symfony-project.com/license">MIT license</license>
+    <notes>Fixes some bugs in README</notes>
+  </release>
+  <release>
+    <version>
+      <release>0.6.2</release>
+      <api>0.6.2</api>
+    </version>
+    <stability>
+      <release>beta</release>
+      <api>beta</api>
+    </stability>
+    <date>2009-08-11</date>
+    <license uri="http://www.symfony-project.com/license">MIT license</license>
+    <notes>Fixes Small bug in README</notes>
+  </release>
+
+ </changelog>
+</package>
