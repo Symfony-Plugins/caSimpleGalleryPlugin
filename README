@@ -1,0 +1,90 @@
+caSimpleGalleryPlugin
+=====================
+
+Overview
+--------
+
+
+caSimpleGalleryPlugin is as the name suggests a simple plugin to create and display
+dynamic photo gallery.
+
+Plugin based on a images from filesystem, the plugin to work properly do not have connections in the database.
+
+Plugin is based on the Strategy design pattern so that in a very quick way you can change
+how to display images by creating your own class (as is the case of widgets)
+
+
+At present, there are two engines display photos
+* SmoothGallery - http://smoothgallery.jondesign.net
+* s3Slider - http://www.serie3.info/s3slider/
+
+Changing the engine of one display to another is very simple:
+
+    [php]
+    $caGallery = new caSimpleGallery();
+    $caGallery->render( new caJdGallery() );
+    //OR
+    $caGallery->render( new caS3SliderGallery() );
+
+Installation
+------------
+
+  * Install depends ( sfImageTransformPlugin )
+
+  * Download the package from the Symfony repo
+
+  * Put extracted files to plugins directory
+
+  * Publish assets
+
+        $ symfony plugin:publish-assets
+
+  * App.yml to a file, you can add options
+
+        [php]
+        all:
+          ca_simple_gallery_plugin:
+            images_dir:           "caSimpleGalleryPlugin/images/galleries/images"
+            thumbs_dir:           "caSimpleGalleryPlugin/images/galleries/thumbs"
+            thumb_def_width:      100
+            thumb_def_height:     100
+
+  * clear cache
+
+        $ symfony cache-clear
+
+Sample usage
+------------
+
+  * The directory <sf_web_dir>/caSimpleGalleryPlugin/images/galleries/images upload a few photos (these may be in folders)
+
+  * In the file share at any point you can use plug
+
+        [php]
+        $this->caGallery = new caSimpleGallery();
+        //if the files are in folders, you can download them by setting
+        $this->caGallery->setRecursive( true );
+
+  * Now, in your view, corresponding to the shares should only cause
+
+        [php]
+        <?php echo $caGallery->render( new caJdGallery() ); ?>
+
+
+Stories
+-------
+
+  * You may upload images via FTP
+  * The system automatically creates thumbnails of photos:
+    * ...When you first view photo
+    * ...Manually by launching a task
+  * The user is able to quickly replace the default way of displaying photos
+  * API (eg for export to RSS or suction to flash gallery)
+
+TODO
+----
+
+  * tests
+  * Add a task to create thumbnails
+  * Make it possible to configure the type of classes caBaseGallery
+  * Add API for AJAX Galleries
