@@ -15,14 +15,14 @@ how to display images by creating your own class (as is the case of widgets)
 
 
 At present, there are two engines display photos
-* SmoothGallery - http://smoothgallery.jondesign.net
-* s3Slider - http://www.serie3.info/s3slider/
+  * SmoothGallery - http://smoothgallery.jondesign.net
+  * s3Slider - http://www.serie3.info/s3slider/
 
 Changing the engine of one display to another is very simple:
 
     [php]
-    $caGallery = new caSimpleGallery();
-    $caGallery->render( new caJdGallery() );
+    $caGallery = new caSimpleGallery( new caJdGallery() );
+    $caGallery->render( );
     //OR
     $caGallery->render( new caS3SliderGallery() );
 
@@ -61,14 +61,14 @@ Sample usage
   * In the file share at any point you can use plug
 
         [php]
-        $this->caGallery = new caSimpleGallery();
+        $this->caGallery = new caSimpleGallery( new caJdGallery() );
         //if the files are in folders, you can download them by setting
         $this->caGallery->setRecursive( true );
 
   * Now, in your view, corresponding to the shares should only cause
 
         [php]
-        <?php echo $caGallery->render( new caJdGallery() ); ?>
+        <?php echo $caGallery->render( ); ?>
 
 
 Stories

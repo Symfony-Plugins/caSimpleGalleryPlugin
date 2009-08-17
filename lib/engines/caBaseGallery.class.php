@@ -40,22 +40,30 @@
  * 
  * @version SVN: $Id$
 */
-class caBaseGallery {
+class caBaseGallery extends sfWidget {
 
-  public function render( array $images ) {
-    $out = '<ul>';
-    foreach( $images as $image ) {
-      $out .= '<li><img src="'.$image->getThumb()->getUrl().'" /></li>';
+  protected $images;
+
+  protected function generateId( $name ) {
+    if( $name === null ) {
+      $id = 'ca-gallery-'.md5( microtime() );
+    }
+    else $id = $name;
+
+    return $id;
+  }
+
+  public function render( $name, $value = null, $attributes = array(), $errors = array() ) {
+    $out = '<ul id="'.$this->getAttribute( 'id' ).'">';
+    foreach( $this->images as $image ) {
+      $out .= '<li class="'.$this->getAttribute( 'item_class' ).'"><img src="'.$image->getThumb()->getUrl().'" alt="'.$image->getFileCoreName().'" /></li>';
     }
     $out .= '</ul>';
     return $out;
   }
 
-  public function getJavascripts() {
-    return null;
-  }
-  public function getStylesheets() {
-    return null;
+  public function setImages( array $images ) {
+    $this->images = $images;
   }
 
 }

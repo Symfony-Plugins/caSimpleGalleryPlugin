@@ -43,41 +43,94 @@
 
 class caJdGallery extends caBaseGallery {
 
-  public function render( array $images ) {
+  public function render( $name, $value = null, $attributes = array(), $errors = array() ) {
     $sJs = <<<EOF
 <script type="text/javascript">
   function startGallery() {
     var myGallery = new gallery($('myGallery'), {
-      timed: true
+      timed: {$this->getOption( 'timed' )},
+      showArrows: {$this->getOption( 'showArrows' )},
+      showCarousel: {$this->getOption( 'showCarousel' )},
+      showInfopane: {$this->getOption( 'showInfopane' )},
+      embedLinks: {$this->getOption('embedLinks')},
+      fadeDuration: {$this->getOption('fadeDuration')},
+      delay:  {$this->getOption('delay')},
+      elementSelector:  ".{$this->getOption('elementClass')}",
+      thumbWidth: {$this->getOption('thumbWidth')},
+      titleSelector:  "{$this->getOption('titleSelector')}",
+      subtitleSelector: "{$this->getOption('subtitleSelector')}",
+      linkSelector: "{$this->getOption('titleSelector')}",
+      imageSelector:  "{$this->getOption( 'imageSelector' )}",
+      thumbnailSelector:  "{$this->getOption( 'thumbnailSelector' )}",
+      defaultTransition:  "{$this->getOption('defaultTransition')}",
+      useReMooz:  {$this->getOption('useReMooz')}
 		});
 	}
   window.addEvent('domready',startGallery);
 </script>
 EOF;
     $out = '<div id="myGallery">';
-    foreach( $images as $image ) {
+    foreach( $this->images as $image ) {
       $out .= sprintf(
-        '<div class="imageElement">
+        '<div class="%s">
           <h3>%s</h3>
           <p></p>
-          <a href="#" title="open image" class="open"></a>
+          <a href="%s" title="open image" class="open"></a>
           <img src="%s" class="full" />
           <img src="%s" class="thumbnail" />
         </div>',
+        $this->getOption('elementClass'),
         $image->getFileCoreName(),
-        $image->getThumb(400, null)->getUrl(),
-        $image->getThumb(100, null)->getUrl()
+        $image->getUrl( true ),
+        $image->getThumb($this->getOption( 'imageWidth' ), null)->getUrl(),
+        $image->getThumb($this->getOption( 'thumbWidth' ), null)->getUrl()
       );
     }
     $out .= '</div>';
     return $sJs.$out;
   }
 
+  protected function configure($options = array(), $attributes = array()) {
+    $this->addOption( 'timed' , 'false');
+    $this->addOption( 'showArrows' , 'true' );
+    $this->addOption( 'showCarousel' , 'true' );
+    $this->addOption( 'showInfopane' , 'true' );
+    $this->addOption( 'embedLinks' , 'true' );
+    $this->addOption( 'fadeDuration' , 500 );
+    $this->addOption( 'delay' , 9000 );
+    $this->addOption( 'useReMooz' , 'true' );
+    $this->addOption( 'imageWidth' , 600 );
+    $this->addOption( 'thumbWidth' , 100 );
+
+    $this->addOption( 'elementClass' , 'imageElement');
+    $this->addOption( 'titleSelector' , 'h3');
+    $this->addOption( 'subtitleSelector' , 'p' );
+    $this->addOption( 'linkSelector' , 'a.open' );
+    $this->addOption( 'imageSelector' , 'img.full' );
+    $this->addOption( 'thumbnailSelector' , 'img.thumbnail' );
+    $this->addOption( 'defaultTransition' , 'fade' );
+
+    return parent::configure($options, $attributes);
+  }
+
   public function getJavascripts( ) {
-    return array( '/caSimpleGalleryPlugin/jdgallery/js/mootools-1.2.1-core-yc.js' , '/caSimpleGalleryPlugin/jdgallery/js/mootools-1.2-more.js', '/caSimpleGalleryPlugin/jdgallery/js/jd.gallery.js' );
+    $js = array(  );
+    $js[] = '/caSimpleGalleryPlugin/jdgallery/js/mootools-1.2.1-core-yc.js';
+    $js[] = '/caSimpleGalleryPlugin/jdgallery/js/mootools-1.2-more.js';
+    if( $this->getOption( 'useReMooz' ) == 'true' ) {
+      $js[] = '/caSimpleGalleryPlugin/jdgallery/js/ReMooz.js';
+    }
+    
+    $js[] = '/caSimpleGalleryPlugin/jdgallery/js/jd.gallery.js';
+    return $js;
   }
   public function getStylesheets( ) {
-    return array( '/caSimpleGalleryPlugin/jdgallery/css/jd.gallery.css' );
+    $css = array();
+    if( $this->getOption( 'useReMooz' ) == 'true' ) {
+      $css[] = '/caSimpleGalleryPlugin/jdgallery/css/ReMooz.css';
+    }
+    $css[] = '/caSimpleGalleryPlugin/jdgallery/css/jd.gallery.css';
+    return $css;
   }
 
 }

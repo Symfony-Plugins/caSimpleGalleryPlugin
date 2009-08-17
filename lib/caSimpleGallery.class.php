@@ -42,9 +42,6 @@
 */
 
 
-
-
-
 class caSimpleGallery {
 
   private $recursive = true;
@@ -60,14 +57,23 @@ class caSimpleGallery {
 
   private $images = array();
 
-  public function  __construct() {
-    $this->images_dir = sfConfig::get( 'app_ca_simple_galery_plugin_images_dir' , 'caSimpleGalleryPlugin/images/galleries/images' );
-    $this->thumbs_dir  = sfConfig::get( 'app_ca_simple_galery_plugin_thumbs_dir' , 'caSimpleGalleryPlugin/images/galleries/thumbs' );
+  private $gallery_engine;
+
+  public function  __construct( caBaseGallery $oGallery = null, $images_dir = null, $thumbs_dir = null ) {
+
+    if( !is_null( $oGallery ) ) {
+      $this->gallery_engine = $oGallery;
+    }
+
+    if( $images_dir === null )
+      $this->images_dir = sfConfig::get( 'app_ca_simple_gallery_plugin_images_dir' , 'caSimpleGalleryPlugin/images/galleries/images' );
+    if( $thumbs_dir === null )
+      $this->thumbs_dir  = sfConfig::get( 'app_ca_simple_gallery_plugin_thumbs_dir' , 'caSimpleGalleryPlugin/images/galleries/thumbs' );
 
     $this->images_full_path = sfConfig::get( 'sf_web_dir' ).DIRECTORY_SEPARATOR.$this->images_dir;
     $this->thumbs_full_path = sfConfig::get( 'sf_web_dir' ).DIRECTORY_SEPARATOR.$this->thumbs_dir;
 
-    $this->thumb_width = sfConfig::get( 'app_ca_simple_galery_plugin_thumb_width' , 100 );
+    $this->thumb_width = sfConfig::get( 'app_ca_simple_gallery_plugin_thumb_width' , 100 );
     $this->thumb_height = sfConfig::get( 'app_ca_simple_gallery_plugin_thumb_height' , 100 );
 
     $this->start_album = sfConfig::get( 'sf_web_dir' ).DIRECTORY_SEPARATOR.$this->images_dir.DIRECTORY_SEPARATOR;
@@ -100,18 +106,22 @@ class caSimpleGallery {
     return $this->images;
   }
 
-  public function render( caBaseGallery $oGallery ) {
-    if( $aJs = $oGallery->getJavascripts() ) {
+  public function render( caBaseGallery $oGallery = null ) {
+    if( !is_null( $oGallery ) ) {
+      $this->gallery_engine = $oGallery;
+    }
+    if( $aJs = $this->gallery_engine->getJavascripts() ) {
       foreach( $aJs as $js ) {
         sfContext::getInstance()->getResponse()->addJavascript( $js );
       }
     }
-    if( $aCss = $oGallery->getStylesheets() ) {
+    if( $aCss = $this->gallery_engine->getStylesheets() ) {
       foreach( $aCss as $css ) {
         sfContext::getInstance()->getResponse()->addStylesheet( $css );
       }
     }
-    return $oGallery->render( $this->fetchImages() );
+    $this->gallery_engine->setImages( $this->fetchImages() );
+    return $this->gallery_engine->render( null );
 
   }
 

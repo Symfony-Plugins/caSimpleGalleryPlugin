@@ -43,39 +43,99 @@
 
 class caS3SliderGallery extends caBaseGallery {
 
-  public function render( array $images ) {
+  public function render( $name, $value = null, $attributes = array(), $errors = array() ) {
+    $id = $this->generateId( $name );
     $sJs = <<<EOF
+
+<style type="text/css">
+  #{$id} {
+    width: {$this->getOption('width')}px; /* important to be same as image width */
+    height: {$this->getOption('height')}px; /* important to be same as image height */
+    position: relative; /* important */
+    overflow: hidden; /* important */
+  }
+  #{$id}Content {
+    width: {$this->getOption('width')}px; /* important to be same as image width or wider */
+    position: absolute;
+    top: 0;
+    margin-left: 0;
+  }
+  .{$id}Image {
+    float: left;
+    position: relative;
+    display: none;
+  }
+  .{$id}Image span {
+    position: absolute;
+    font: 10px/15px Arial, Helvetica, sans-serif;
+    padding: 10px 13px;
+    width: {$this->getOption('width')}px;
+    background-color: #000;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+    color: #fff;
+    display: none;
+  }
+  .clear {
+    clear: both;
+  }
+  .{$id}Image span strong {
+    font-size: 14px;
+  }
+  .top {
+    top: 0;
+    left: 0;
+  }
+  .bottom {
+    bottom: 0;
+    left: 0;
+  }
+  ul { list-style-type: none;}
+</style>
+
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#slider').s3Slider({
-      timeOut: 3000
+    $('#{$id}').s3Slider({
+      timeOut: {$this->getOption('timeOut')}
     });
   });
 </script>
 EOF;
-    $out = '<div id="slider"><ul id="sliderContent">';
-    foreach( $images as $image ) {
+    $out = '<div id="'.$id.'">';
+    $out .= '<ul id="'.$id.'Content">';
+    foreach( $this->images as $image ) {
       $out .= sprintf(
-        '<li class="sliderImage">
+        '<li class="%sImage">
           <a href="">
             <img src="%s" alt="%s" />
           </a>
-          <span class="top"><strong>Title text 1</strong><br />Content text...</span>
+          %s
         </li>',
-        $image->getThumb(500, null)->getUrl(),
-        $image->getFileCoreName()
+        $id,
+        $image->getThumb($this->getOption( 'width' ), null)->getUrl(),
+        $image->getFileCoreName(),
+        $this->getOption( 'withFileName' ) ? '<span class="'.$this->getOption('paneAlignment').'"><strong>'.$image->getFileCoreName().'</strong></span>' : ''
       );
     }
     $out .= '</ul></div>';
     return $sJs.$out;
   }
 
-  public function getJavascripts( ) {
-    return array( '/caSimpleGalleryPlugin/s3Slider/js/jquery.js' , '/caSimpleGalleryPlugin/s3Slider/js/s3Slider.js' );
+  protected function configure( $options = array(), $attributes = array() ) {
+
+    $this->addOption( 'timeOut' , 3000 );
+    $this->addOption( 'width' , 500 );
+    $this->addOption( 'height' , 300 );
+    $this->addOption( 'withFileName' , true );
+    $this->addOption( 'paneAlignment' , 'top' );
+
+    return parent::configure($options, $attributes);
   }
 
-  public function getStylesheets() {
-    return array( '/caSimpleGalleryPlugin/s3Slider/css/s3Slider.css' );
+  public function getJavascripts( ) {
+    return array( '/caSimpleGalleryPlugin/s3Slider/js/jquery.js' , '/caSimpleGalleryPlugin/s3Slider/js/s3Slider.js' );
   }
 
 }

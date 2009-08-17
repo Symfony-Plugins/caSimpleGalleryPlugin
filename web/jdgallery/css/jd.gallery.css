@@ -41,7 +41,7 @@
 	background-color: #000;
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-image: url('img/loading-bar-black.gif');
+	background-image: url('../images/loading-bar-black.gif');
 }
 
 .jdGallery .loadingElement
@@ -54,7 +54,7 @@
 	background-color: #000;
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-image: url('img/loading-bar-black.gif');
+	background-image: url('../images/loading-bar-black.gif');
 }
 
 .jdGallery .slideInfoZone
@@ -235,19 +235,19 @@
 {
 	left: 0;
 	top: 0;
-	background: url('img/fleche1.png') no-repeat center left;
+	background: url('../images/fleche1.png') no-repeat center left;
 }
 
-* html .jdGallery a.left { background: url('img/fleche1.gif') no-repeat center left; }
+* html .jdGallery a.left { background: url('../images/fleche1.gif') no-repeat center left; }
 
 .jdGallery a.right
 {
 	right: 0;
 	top: 0;
-	background: url('img/fleche2.png') no-repeat center right;
+	background: url('../images/fleche2.png') no-repeat center right;
 }
 
-* html .jdGallery a.right { background: url('img/fleche2.gif') no-repeat center right; }
+* html .jdGallery a.right { background: url('../images/fleche2.gif') no-repeat center right; }
 
 .jdGallery a.open
 {
@@ -272,9 +272,9 @@
 	opacity: 0.8;
 }
 
-.withArrows a.open:hover { background: url('img/open.png') no-repeat center center; }
+.withArrows a.open:hover { background: url('../images/open.png') no-repeat center center; }
 
-* html .withArrows a.open:hover { background: url('img/open.gif') no-repeat center center;
+* html .withArrows a.open:hover { background: url('../images/open.gif') no-repeat center center;
 	filter:alpha(opacity=80); }
 	
 	
