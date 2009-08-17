@@ -13,12 +13,12 @@
  <date>2009-08-17</date>
  <time>09:57:36</time>
  <version>
-  <release>1.0</release>
-  <api>1.0</api>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
@@ -108,8 +108,8 @@ Initial public release
 
   <release>
    <version>
-    <release>1.0</release>
-    <api>1.0</api>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
    </version>
    <stability>
     <release>stable</release>
